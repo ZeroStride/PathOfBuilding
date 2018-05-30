@@ -1852,6 +1852,7 @@ skills["SupportPowerChargeOnCrit"] = {
 	excludeSkillTypes = { },
 	baseMods = {
 		mod("ManaCost", "MORE", 10), 
+		mod("Damage", "MORE", 4, 0, 0, { type = "Multiplier", var = "PowerCharge" }),
 	},
 	qualityMods = {
 		mod("CritChance", "INC", 1, 0, 0, nil), --"critical_strike_chance_+%" = 1
