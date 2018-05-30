@@ -3342,51 +3342,60 @@ skills["IceSpear"] = {
 skills["Incinerate"] = {
 	name = "Incinerate",
 	gemTags = {
-		projectile = true,
 		intelligence = true,
 		active_skill = true,
 		spell = true,
 		fire = true,
 		channelling = true,
+		area = true
 	},
-	gemTagString = "Projectile, Spell, Fire, Channelling",
+	gemTagString = "Spell, Fire, Channelling, AoE",
 	gemStr = 0,
 	gemDex = 0,
 	gemInt = 100,
 	color = 3,
 	description = "Continuously launches a torrent of fire from your hand. The longer you channel this spell, the larger and more damaging the flames become.",
-	skillTypes = { [2] = true, [3] = true, [68] = true, [10] = true, [18] = true, [33] = true, [58] = true, },
+	skillTypes = { [2] = true, [10] = true, [18] = true, [33] = true, [58] = true, [11] = true },
 	parts = {
 		{
-			name = "Base damage",
+			name = "1 Stage",
 		},
 		{
-			name = "Fully charged",
+			name = "4 Stages",
+		},
+		{
+			name = "8 Stages",
+		},
+		{
+			name = "Release",
 		},
 	},
 	baseFlags = {
 		spell = true,
-		projectile = true,
+		area = true,
 		fire = true,
 	},
 	baseMods = {
-		skill("castTime", 0.2), 
-		skill("damageEffectiveness", 0.3), 
-		--"flamethrower_damage_+%_per_stage_final" = 50
-		--"base_is_projectile" = ?
-		flag("PierceAllTargets"), --"always_pierce" = ?
-		--"skill_can_add_multiple_charges_per_action" = ?
-		mod("Damage", "MORE", 150, 0, bit.bor(KeywordFlag.Hit, KeywordFlag.Ailment), { type = "SkillPart", skillPart = 2 }), 
+		skill("castTime", 0.2),
+		skill("damageEffectiveness", 0.3),
+		skill("CritChance", 5),
+		mod("Damage", "MORE", 25, 0, bit.bor(KeywordFlag.Hit, KeywordFlag.Ailment), { type = "SkillPart", skillPart = 1 }),
+		mod("Damage", "MORE", 100, 0, bit.bor(KeywordFlag.Hit, KeywordFlag.Ailment), { type = "SkillPart", skillPart = 2 }),
+		mod("Damage", "MORE", 200, 0, bit.bor(KeywordFlag.Hit, KeywordFlag.Ignite), { type = "SkillPart", skillPart = 3 }),
+		mod("Damage", "MORE", 500, 0, bit.bor(KeywordFlag.Hit, KeywordFlag.Ignite), { type = "SkillPart", skillPart = 4 }),
+		skill("showAverage", true, { type = "SkillPart", skillPart = 4 }),
 	},
 	qualityMods = {
-		mod("ProjectileSpeed", "INC", 2), --"base_projectile_speed_+%" = 2
+		mod("FireDamage", "INC", 1)
 	},
 	levelMods = {
-		[1] = skill("levelRequirement", nil), 
-		[2] = skill("manaCost", nil), 
+		[1] = skill("levelRequirement", nil),
+		[2] = skill("manaCost", nil),
 		[3] = skill("FireMin", nil), --"spell_minimum_base_fire_damage"
 		[4] = skill("FireMax", nil), --"spell_maximum_base_fire_damage"
 	},
+	-- TODO: The gem screenshot has 163-245 fire damage, however patch notes do not mention a buff
+	-- TODO: The gem screenshot has a mana cost of 5, however patch notes do not mention a buff
 	levels = {
 		[1] = { 12, 6, 6, 9, },
 		[2] = { 15, 6, 7, 11, },
